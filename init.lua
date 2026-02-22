@@ -87,6 +87,23 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+
+-- ############## USER DEFINED :
+vim.cmd [[
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight NormalNC guibg=NONE ctermbg=NONE
+]]
+-- Líneas nuevas sin entrar en modo insert
+-- Agrega línea debajo
+-- Agregar línea debajo
+-- Línea debajo como o pero vuelve a modo normal
+vim.keymap.set('n', '<leader>o', ':normal! o<Esc><CR>', {desc = "Agregar línea debajo y volver a normal"})
+
+-- Línea arriba como O pero vuelve a modo normal
+vim.keymap.set('n', '<leader>O', ':normal! O<Esc><CR>', {desc = "Agregar línea arriba y volver a normal"})
+
+-- ##############
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -102,7 +119,7 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -183,6 +200,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<C-[><C-[>', '<C-\\><C-n>' )
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -204,6 +222,14 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
+-- Salir de la temrinal sin esc esc
+vim.keymap.set('t', 'jk', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
+-- cambiar de buffers
+vim.keymap.set('n', '<leader>j', ':bn<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>k', ':bp<CR>', { desc = 'Prev buffer' })
+
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -984,7 +1010,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
