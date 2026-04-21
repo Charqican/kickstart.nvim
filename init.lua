@@ -72,6 +72,7 @@ Kickstart Guide:
 
    NOTE: Look for lines like this
 
+
     Throughout the file. These are for you, the reader, to help you understand what is happening.
     Feel free to delete them once you know what you're doing, but they should serve as a guide
     for when you are first encountering a few different constructs in your Neovim config.
@@ -83,27 +84,11 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+require 'custom.userdefined'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-
--- ############## USER DEFINED :
-vim.cmd [[
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight NormalNC guibg=NONE ctermbg=NONE
-]]
--- Líneas nuevas sin entrar en modo insert
--- Agrega línea debajo
--- Agregar línea debajo
--- Línea debajo como o pero vuelve a modo normal
-vim.keymap.set('n', '<leader>o', ':normal! o<Esc><CR>', {desc = "Agregar línea debajo y volver a normal"})
-
--- Línea arriba como O pero vuelve a modo normal
-vim.keymap.set('n', '<leader>O', ':normal! O<Esc><CR>', {desc = "Agregar línea arriba y volver a normal"})
-
--- ##############
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -200,7 +185,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('t', '<C-[><C-[>', '<C-\\><C-n>' )
+vim.keymap.set('t', '<C-[><C-[>', '<C-\\><C-n>')
 
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -217,20 +202,20 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+--vim.keymap.set('n', '<Tab>', '<cmd>bnext<CR>', { desc = 'Next buffer', silent = true })
+--vim.keymap.set('n', '<S-Tab>', '<cmd>bprevious<CR>', { desc = 'Prev buffer', silent = true })
+
+vim.keymap.set('n', '<leader>j', '<cmd>bnext<CR>', { desc = 'Next buffer', silent = true })
+vim.keymap.set('n', '<leader>k', '<cmd>bprevious<CR>', { desc = 'Prev buffer', silent = true })
+
+vim.keymap.set('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Delete buffer', silent = true })
+
+vim.keymap.set('n', '<leader>b', '<cmd>enew<CR>', { desc = 'New buffer', silent = true })
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
-vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
--- Salir de la temrinal sin esc esc
-vim.keymap.set('t', 'jk', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
--- cambiar de buffers
-vim.keymap.set('n', '<leader>j', ':bn<CR>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<leader>k', ':bp<CR>', { desc = 'Prev buffer' })
-
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -286,7 +271,7 @@ require('lazy').setup({
   -- If you prefer to call `setup` explicitly, use:
   --    {
   --        'lewis6991/gitsigns.nvim',
-  --        config = function()
+  --        config = function()'custom.userdefined.keymaps'
   --            require('gitsigns').setup({
   --                -- Your gitsigns configuration here
   --            })
@@ -1011,6 +996,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
+  -- User defined configurations
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
