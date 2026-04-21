@@ -12,7 +12,7 @@ Start-Process -FilePath $msys2Installer -ArgumentList "install --root C:\msys64 
 # ── Paquetes pacman ──────────────────────────────────────────
 Write-Host "Instalando paquetes MSYS2..."
 $pacman = "C:\msys64\usr\bin\bash.exe"
-$packages = "mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-curl mingw-w64-ucrt-x86_64-libarchive"
+$packages = "mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-clang mingw-w64-ucrt-x86_64-curl mingw-w64-ucrt-x86_64-libarchive mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-make"
 Start-Process -FilePath $pacman -ArgumentList "-lc `"pacman -S --noconfirm $packages`"" -Wait
 
 # ── PATH ─────────────────────────────────────────────────────
