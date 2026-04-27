@@ -25,6 +25,9 @@ if ($currentPath -notlike "*$ucrtBin*") {
 # Actualizar PATH en la sesion actual tambien
 $env:Path += ";$ucrtBin"
 
+# -- Instlar NodeJS y OpenJS
+Write-Host "Instalando NodeJS..."
+winget install OpenJS.NodeJS
 # ── Rust ─────────────────────────────────────────────────────
 Write-Host "Instalando Rust..."
 $rustupInstaller = "$env:TEMP\rustup-init.exe"
@@ -45,4 +48,60 @@ Write-Host "  cargo --version"
 Write-Host "  tree-sitter --version"
 
 # -- install neovim ──────────────────────────────────────────
-winget install Neovim.Neovim 
+winget install Neovim.Neovim
+# ── Git (requerido para file.exe) ────────────────────────────
+Write-Host "Instalando Git for Windows..."
+winget install Git.Git --accept-package-agreements --accept-source-agreements
+
+# Configurar YAZI_FILE_ONE
+$gitFile = "C:\Program Files\Git\usr\bin\file.exe"
+[Environment]::SetEnvironmentVariable("YAZI_FILE_ONE", $gitFile, "User")
+$env:YAZI_FILE_ONE = $gitFile
+
+# ── Yazi ────────────────────────────────────────────────────
+Write-Host "Instalando Yazi..."
+winget install sxyazi.yazi --accept-package-agreements --accept-source-agreements
+
+# ── Dependencias opcionales (MUY recomendadas) ───────────────
+Write-Host "Instalando dependencias opcionales para Yazi..."
+winget install `
+    Gyan.FFmpeg `
+    7zip.7zip `
+    jqlang.jq `
+    oschwartz10612.Poppler `
+    sharkdp.fd `
+    BurntSushi.ripgrep.MSVC `
+    junegunn.fzf `
+    ajeetdsouza.zoxide `
+    ImageMagick.ImageMagick `
+    --accept-package-agreements --accept-source-agreements
+
+# ── resvg (manual) ───────────────────────────────────────────
+Write-Host "Instalando resvg..."
+
+$resvgVersion = "0.47.0"
+$resvgZip = "$env:TEMP\resvg.zip"
+$resvgDir = "$env:USERPROFILE\resvg"
+
+$resvgUrl = "https://github.com/linebender/resvg/releases/download/v$resvgVersion/resvg-win64.zip"
+
+Invoke-WebRequest -Uri $resvgUrl -OutFile $resvgZip
+Expand-Archive -Path $resvgZip -DestinationPath $resvgDir -Force
+
+# Normalizar estructura (a veces viene en subcarpeta)
+$resvgExe = Get-ChildItem -Path $resvgDir -Recurse -Filter "resvg.exe" | Select-Object -First 1
+
+if ($resvgExe) {
+    $finalDir = Split-Path $resvgExe.FullName
+} else {
+    Write-Host "Error: resvg.exe no encontrado"
+    exit 1
+}
+
+# Agregar al PATH
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($currentPath -notlike "*$finalDir*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$finalDir", "User")
+    Write-Host "PATH actualizado con resvg"
+}
+$env:Path += ";$finalDir"
