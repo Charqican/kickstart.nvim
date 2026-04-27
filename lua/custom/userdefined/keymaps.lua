@@ -29,3 +29,24 @@ vim.keymap.set('n', '<leader>v', '<C-w>v', { desc = 'Split [V]ertical' })
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { desc = 'Guardar archivo' })
 vim.keymap.set('n', '<C-q>', '<cmd>q<CR>', { desc = 'Cerrar ventana' })
 vim.keymap.set('n', '<leader>T', '<cmd>Floaterminal<CR>', { desc = '[T]oggle [T]erminal' })
+
+-- No sobrescribir clipboard al borrar
+vim.keymap.set('n', 'x', '"_x')
+vim.keymap.set('n', 'X', '"_X')
+
+-- Opcional (más agresivo, piénsalo bien)
+-- vim.keymap.set('n', 'd', '"_d')
+-- vim.keymap.set('v', 'd', '"_d')
+
+-- Pegar sin perder lo copiado (modo visual)
+vim.keymap.set('v', 'p', '"_dP')
+
+-- Atajos tipo “editor moderno”
+vim.keymap.set('n', '<C-c>', 'yy') -- copiar línea
+vim.keymap.set('v', '<C-c>', 'y') -- copiar selección
+vim.keymap.set('n', '<C-v>', 'p') -- pegar
+vim.keymap.set('i', '<C-v>', '<C-r>+') -- pegar en insert
+
+-- Mantener selección al indentar
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
