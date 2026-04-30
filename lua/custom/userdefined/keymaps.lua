@@ -50,3 +50,9 @@ vim.keymap.set('i', '<C-v>', '<C-r>+') -- pegar en insert
 -- Mantener selección al indentar
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('n', '<leader>sa', function()
+  require('telescope.builtin').find_files {
+    hidden = true,
+    no_ignore = true,
+  }
+end)
