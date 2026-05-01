@@ -2,6 +2,7 @@
 local wezterm = require("wezterm")
 
 return {
+	enable_kitty_graphics = true,
 	window_background_opacity = 0.95,
 	--color_scheme = "Afterglow",
 	--color_scheme = "Andromeda",
@@ -21,7 +22,16 @@ return {
 				args = { "yazi" },
 			}),
 		},
-
+		{
+			key = "s",
+			mods = "ALT",
+			action = wezterm.action.SplitHorizontal({}),
+		},
+		{
+			key = "v",
+			mods = "ALT",
+			action = wezterm.action.SplitVertical({}),
+		},
 		{
 			key = "h",
 			mods = "ALT",
