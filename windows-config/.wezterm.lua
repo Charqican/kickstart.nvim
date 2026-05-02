@@ -11,7 +11,7 @@ return {
 	--color_scheme = 'Ayu Mirage',
 	--color_scheme = "Atelierheath (dark) (terminal.sexy)",
 	--color_scheme = "Atelierlakeside (dark) (terminal.sexy)",
-	default_prog = { "C:/Program Files (x86)/PowerShell/7/pwsh.exe" }, -- PowerShell 7
+	default_prog = { "C:/Program Files/PowerShell/7/pwsh.exe" }, -- PowerShell 7
 	default_cwd = wezterm.home_dir .. "/dev",
 	hide_tab_bar_if_only_one_tab = true,
 	keys = {
@@ -41,6 +41,16 @@ return {
 			key = "l",
 			mods = "ALT",
 			action = wezterm.action.ActivatePaneDirection("Right"),
+		},
+		{
+			key = "j",
+			mods = "ALT",
+			action = wezterm.action.ActivatePaneDirection("Down"),
+		},
+		{
+			key = "k",
+			mods = "ALT",
+			action = wezterm.action.ActivatePaneDirection("Up"),
 		},
 	},
 }
