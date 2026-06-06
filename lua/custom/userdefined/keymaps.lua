@@ -56,3 +56,17 @@ vim.keymap.set('n', '<leader>sa', function()
     no_ignore = true,
   }
 end)
+
+vim.keymap.set('n', '<leader>ff', function()
+  require('telescope.builtin').find_files { hidden = true }
+end)
+
+vim.keymap.set('n', '<leader>bd', function()
+  require('telescope.builtin').buffers {
+    attach_mappings = function(_, map)
+      map('i', '<C-d>', require('telescope.actions').delete_buffer)
+      map('n', '<C-d>', require('telescope.actions').delete_buffer)
+      return true
+    end,
+  }
+end, { desc = 'Buffers (delete with <C-d>)' })
